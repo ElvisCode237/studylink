@@ -114,6 +114,57 @@ async function seedDemoUsersIfNeeded() {
   });
 }
 
+async function seedDemoMessagesIfNeeded() {
+  const student = await query("SELECT id FROM users WHERE email = 'student@studylink.com' LIMIT 1");
+  if (student.rowCount === 0) return;
+
+  const messageCount = await query('SELECT COUNT(*)::int AS count FROM messages WHERE sender_id = $1 OR recipient_id = $1', [
+    student.rows[0].id,
+  ]);
+  if (messageCount.rows[0].count > 0) return;
+
+  const tutors = await query(
+    `SELECT id, full_name
+     FROM users
+     WHERE role = 'tutor'
+     ORDER BY full_name
+     LIMIT 3`
+  );
+
+  const conversations = [
+    [
+      "Bonjour Alex, j'ai regardé ton niveau Python. On peut démarrer par les fonctions puis passer aux projets.",
+      'Parfait, je veux surtout comprendre comment organiser mon code.',
+      'Très bien. Je te prépare un exercice court pour la prochaine session.',
+    ],
+    [
+      'Salut Alex, tu veux travailler les statistiques ou les probabilités cette semaine ?',
+      'Les probabilités, surtout les exercices avec arbres.',
+      'Noté. On fera une méthode simple avec deux exemples guidés.',
+    ],
+    [
+      'Bonjour, ton CV est déjà clair. Je te conseille de renforcer la partie projets.',
+      'Merci, je peux ajouter StudyLink comme projet ?',
+      'Oui, surtout si tu expliques ton rôle et les technologies utilisées.',
+    ],
+  ];
+
+  for (const [index, tutor] of tutors.rows.entries()) {
+    const thread = conversations[index] || conversations[0];
+    for (const [messageIndex, content] of thread.entries()) {
+      const senderId = messageIndex % 2 === 0 ? tutor.id : student.rows[0].id;
+      const recipientId = messageIndex % 2 === 0 ? student.rows[0].id : tutor.id;
+      await query(
+        `INSERT INTO messages (sender_id, recipient_id, content, created_at)
+         VALUES ($1, $2, $3, now() - ($4 || ' minutes')::interval)`,
+        [senderId, recipientId, content, (index + 1) * 20 - messageIndex * 4]
+      );
+    }
+  }
+
+  console.log('- Conversations de demonstration ajoutees');
+}
+
 async function main() {
   console.log('Initialisation Render de la base StudyLink...');
   await createMigrationTable();
@@ -143,6 +194,7 @@ async function main() {
 
   await seedDemoUsersIfNeeded();
   await ensureAdminUser();
+  await seedDemoMessagesIfNeeded();
   console.log('Base StudyLink prete.');
 }
 

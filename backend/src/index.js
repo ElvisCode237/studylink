@@ -43,7 +43,8 @@ app.use('/api/bookings', requireAuth, bookingRoutes);
 app.use('/api/reviews', requireAuth, reviewRoutes);
 app.use('/api/materials', requireAuth, materialRoutes);
 app.use('/api/messages', async (req, res, next) => {
-  if (req.headers.authorization || process.env.NODE_ENV === 'production') {
+  const demoMode = process.env.DEMO_MODE === 'true';
+  if (req.headers.authorization || !demoMode) {
     return requireAuth(req, res, next);
   }
   try {

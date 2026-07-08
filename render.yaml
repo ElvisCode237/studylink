@@ -20,5 +20,7 @@ services:
         generateValue: true
       - key: FRONTEND_URL
         sync: false
+      - key: DEMO_MODE
+        value: true
       - key: PORT
         value: 10000
