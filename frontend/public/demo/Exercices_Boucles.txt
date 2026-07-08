@@ -1,0 +1,1 @@
+Exercices – Boucles Python\n\n1. Afficher les nombres de 1 à 20.\n2. Calculer la somme des nombres pairs.\n3. Parcourir une liste de noms.

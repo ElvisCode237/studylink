@@ -1,0 +1,16 @@
+{
+  "appId": "com.studylink.mobile",
+  "appName": "StudyLink",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": true,
+      "backgroundColor": "#2563eb",
+      "showSpinner": false
+    }
+  }
+}

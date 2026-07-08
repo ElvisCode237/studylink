@@ -1,0 +1,1 @@
+Guide Python – Bases\n\nCe fichier de démonstration représente un support de cours réel.\nDans la version de production, les fichiers publiés depuis l’administration apparaissent ici automatiquement.

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title>StudyLink</title>
+  <rect width="512" height="512" rx="112" fill="#2563eb"/>
+  <path fill="#fff" d="M256 94 418 256 256 418 94 256 256 94Zm0 92-70 70 70 70 70-70-70-70Z"/>
+</svg>

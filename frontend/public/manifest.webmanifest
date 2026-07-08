@@ -1,0 +1,17 @@
+{
+  "name": "StudyLink",
+  "short_name": "StudyLink",
+  "description": "Plateforme de tutorat, cours, sessions et messages.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/app-icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

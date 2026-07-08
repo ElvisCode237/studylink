@@ -1,0 +1,24 @@
+databases:
+  - name: studylink-db
+    plan: free
+    databaseName: studylink
+    user: studylink
+
+services:
+  - type: web
+    name: studylink-api
+    runtime: node
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build && cd ../backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: studylink-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false
+      - key: PORT
+        value: 10000
